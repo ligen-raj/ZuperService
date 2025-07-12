@@ -15,7 +15,7 @@ extension ServiceStatus {
         case .active: .blue
         case .scheduled: .teal
         case .completed: .green
-        case .inProgress: .yellow
+        case .inProgress: .orange
         case .urgent: .red
         }
     }
