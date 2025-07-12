@@ -11,13 +11,26 @@ struct HomeView: View {
     
     // MARK: - PROPERTIES
     
+    @StateObject private var viewModel = HomeViewModel()
     
+    @Binding var path: NavigationPath
     
     // MARK: - BODY
     
     var body: some View {
         
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(viewModel.services) { service in
+            Button(action: {
+                path.append(service)
+            }) {
+                ServiceItemView(service: service)
+            }
+            .buttonStyle(.plain)
+            .listRowSeparator(.hidden)
+        }
+        .listStyle(.plain)
+        .scrollIndicators(.hidden)
+        .searchable(text: $viewModel.searchText)
         
     }
 }
@@ -25,5 +38,6 @@ struct HomeView: View {
 // MARK: - PREVIEW
 
 #Preview {
-    HomeView()
+//    HomeView()
+    ContentView()
 }

@@ -27,6 +27,7 @@ struct ServiceItemView: View {
         }
         .padding(12)
         .background(.secondary, in: .rect(cornerRadius: 12).stroke(lineWidth: 1))
+        .contentShape(.rect(cornerRadius: 12))
         
     }
 }

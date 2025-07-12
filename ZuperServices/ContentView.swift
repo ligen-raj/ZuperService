@@ -6,18 +6,28 @@
 //
 
 import SwiftUI
+import ServicesSampleData
 
 struct ContentView: View {
+    
+    // MARK: - PROPERTIES
+    
+    @State private var path = NavigationPath() // Or I can write custom router for navigation
+    
+    // MARK: - BODY
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        NavigationStack(path: $path) {
+            HomeView(path: $path)
+                .navigationTitle("Services")
+                .navigationDestination(for: Service.self, destination: ServiceDetailView.init)
         }
-        .padding()
+        
     }
 }
+
+// MARK: - PREVIEW
 
 #Preview {
     ContentView()
