@@ -19,20 +19,40 @@ struct HomeView: View {
     
     var body: some View {
         
-        List(viewModel.services) { service in
-            Button(action: {
-                path.append(service)
-            }) {
-                ServiceItemView(service: service)
+        ZStack(alignment: .topLeading) {
+            List(viewModel.filteredServices) { service in
+                Button(action: {
+                    path.append(service)
+                }) {
+                    ServiceItemView(service: service)
+                }
+                .buttonStyle(.plain)
+                .listRowSeparator(.hidden)
             }
-            .buttonStyle(.plain)
-            .listRowSeparator(.hidden)
+            .listStyle(.plain)
+            .refreshable(action: {
+                await viewModel.onRefresh()
+            })
+            .scrollIndicators(.hidden)
+            .searchable(text: $viewModel.searchText)
+            .animation(.default, value: viewModel.filteredServices)
+            
+            VStack(alignment: .center, spacing: 0) {
+                    EmptyStateView
+                        .transition(.opacity)
+                        .active(if: !viewModel.searchText.isEmpty && viewModel.filteredServices.isEmpty)
+            }
+            .animation(.easeIn, value: viewModel.filteredServices.isEmpty)
         }
-        .listStyle(.plain)
-        .scrollIndicators(.hidden)
-        .searchable(text: $viewModel.searchText)
         
     }
+    
+    @ViewBuilder
+    private var EmptyStateView: some View {
+        Text("No services found under \(viewModel.searchText).")
+            .padding()
+    }
+    
 }
 
 // MARK: - PREVIEW

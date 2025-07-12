@@ -5,6 +5,7 @@
 //  Created by Ligen Raj on 12/07/25.
 //
 
+import MapKit
 import SwiftUI
 import ServicesSampleData
 
@@ -12,7 +13,22 @@ struct ServiceDetailView: View {
     
     // MARK: - PROPERTIES
     
-    let service: Service
+    private let service: Service
+    private let span: MKCoordinateSpan
+    private let coordinate: CLLocationCoordinate2D
+    
+    private var location: Location {
+        Location(name: service.location, coordinate: coordinate)
+    }
+    
+    init(service: Service) {
+        self.service = service
+        let randomSpan: CLLocationDegrees = .random(in: 0.5...0.7)
+        
+//        coordinate = CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275) // London
+        coordinate = .randomCoordinateInIndia()
+        span = MKCoordinateSpan(latitudeDelta: randomSpan, longitudeDelta: randomSpan)
+    }
     
     // MARK: - BODY
     
@@ -20,6 +36,8 @@ struct ServiceDetailView: View {
         
         ScrollView(.vertical) {
             VStack(alignment: .center, spacing: 16) {
+                MapSectionView
+                
                 HeaderSectionView
                 
                 SectionItemView(image: .user, title: "Customer", description: service.customerName)
@@ -43,6 +61,16 @@ struct ServiceDetailView: View {
 }
 
 private extension ServiceDetailView {
+    
+    @ViewBuilder
+    var MapSectionView: some View {
+        Map(coordinateRegion: .constant(MKCoordinateRegion(center: coordinate, span: span)), annotationItems: [location], annotationContent: { location in
+            MapMarker(coordinate: location.coordinate, tint: .green)
+        })
+        .frame(height: 200)
+        .clipShape(.rect(cornerRadius: 16))
+        .overlay(.secondary, in: .rect(cornerRadius: 16).stroke())
+    }
     
     var TitleView: some View {
         Text(service.title)
@@ -74,17 +102,6 @@ private extension ServiceDetailView {
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-        }
-    }
-    
-}
-
-extension View {
-    
-    @ViewBuilder
-    func scrollBounceBehaviorBasedOnSize() -> some View {
-        if #available(iOS 16.4, *) {
-            scrollBounceBehavior(.basedOnSize)
         }
     }
     
