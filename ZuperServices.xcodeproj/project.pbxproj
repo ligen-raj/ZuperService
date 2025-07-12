@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AA93902D2E2224540005C106 /* ServicesSampleData in Frameworks */ = {isa = PBXBuildFile; productRef = AA93902C2E2224540005C106 /* ServicesSampleData */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		AA93901C2E22233F0005C106 /* ZuperServices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZuperServices.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA93902D2E2224540005C106 /* ServicesSampleData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = ZuperServices;
 			packageProductDependencies = (
+				AA93902C2E2224540005C106 /* ServicesSampleData */,
 			);
 			productName = ZuperServices;
 			productReference = AA93901C2E22233F0005C106 /* ZuperServices.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = AA9390132E22233F0005C106;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AA93902B2E2224540005C106 /* XCRemoteSwiftPackageReference "ServicesSampleData" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AA93901D2E22233F0005C106 /* Products */;
 			projectDirPath = "";
@@ -343,6 +352,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA93902B2E2224540005C106 /* XCRemoteSwiftPackageReference "ServicesSampleData" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sabari-zuper/ServicesSampleData.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA93902C2E2224540005C106 /* ServicesSampleData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA93902B2E2224540005C106 /* XCRemoteSwiftPackageReference "ServicesSampleData" */;
+			productName = ServicesSampleData;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AA9390142E22233F0005C106 /* Project object */;
 }
