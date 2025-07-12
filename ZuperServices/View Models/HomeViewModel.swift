@@ -33,22 +33,25 @@ class HomeViewModel: ObservableObject {
             .debounce(for: 0.3, scheduler: RunLoop.main)
             .removeDuplicates()
             .combineLatest($services)
-            .sink { [weak self] text, services in
-                guard let self else { return }
-                
-                if text.isEmpty {
-                 filteredServices = services
-                } else {
-                    filteredServices = services.filter { service in
-                        service.title.localizedCaseInsensitiveContains(text) ||
-                        service.description.localizedCaseInsensitiveContains(text) ||
-                        service.customerName.localizedCaseInsensitiveContains(text)
+            .sink { text, services in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    
+                    if text.isEmpty {
+                        filteredServices = services
+                    } else {
+                        filteredServices = services.filter { service in
+                            service.title.localizedCaseInsensitiveContains(text) ||
+                            service.description.localizedCaseInsensitiveContains(text) ||
+                            service.customerName.localizedCaseInsensitiveContains(text)
+                        }
                     }
                 }
             }
             .store(in: &cancellables)
     }
     
+    @MainActor
     func onRefresh() async {
         try? await Task.sleep(for: .seconds(.random(in: 2...3)))
         
